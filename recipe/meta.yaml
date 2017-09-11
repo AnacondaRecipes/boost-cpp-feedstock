@@ -1,4 +1,4 @@
-{% set version = "1.64.0" %}
+{% set version = "1.65.1" %}
 {% set filename = "boost_%s.tar.bz2" % version.replace(".", "_") %}
 
 package:
@@ -8,34 +8,25 @@ package:
 source:
   fn:  {{ filename }}
   url: https://dl.bintray.com/boostorg/release/{{ version }}/source/{{ filename }}
-  sha256: 7bcc5caace97baa948931d712ea5f37038dbb1c5d89b43ad4def4ed7cb683332
-  patches:
-    # https://svn.boost.org/trac/boost/ticket/12516
-    - boost-serialization-1.64.patch
+  sha256: 9807a5d16566c57fd74fb522764e0b134a8bbe6b6e8967b83afefd30dcd3be81
 
 build:
-  number: 1
-  skip: true            # [win and py>35]
+  number: 0
   features:
-    - vc9               # [win and py27]
-    - vc14              # [win and py35]
+    - vc{{ vc }}        # [win]
 
 requirements:
   build:
-    - toolchain
-    - python            # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - icu 58.*          # [unix]
     - bzip2 1.0.*       # [unix]
     - zlib 1.2.*
-    - vc 9              # [win and py27]
-    - vc 14             # [win and py35]
 
   run:
     - icu 58.*          # [unix]
     - bzip2 1.0.*       # [unix]
     - zlib 1.2.*
-    - vc 9              # [win and py27]
-    - vc 14             # [win and py35]
 
 test:
   commands:

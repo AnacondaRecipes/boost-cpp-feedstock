@@ -20,6 +20,8 @@ if [ "$(uname)" == "Darwin" ]; then
     TOOLSET=clang
 elif [ "$(uname)" == "Linux" ]; then
     TOOLSET=gcc
+    # http://www.boost.org/build/doc/html/bbv2/tasks/crosscompile.html
+    echo "using gcc : : ${CXX} ;" >> ${SRC_DIR}/tools/build/src/site-config.jam
 fi
 
 LINKFLAGS="${LINKFLAGS} -L${LIBRARY_PATH}"
@@ -27,8 +29,13 @@ LINKFLAGS="${LINKFLAGS} -L${LIBRARY_PATH}"
 ./bootstrap.sh \
     --prefix="${PREFIX}" \
     --without-libraries=python \
+    --with-toolset=cc \
     --with-icu="${PREFIX}" \
     | tee bootstrap.log 2>&1
+
+# https://svn.boost.org/trac10/ticket/5917
+# https://stackoverflow.com/a/5244844/1005215
+sed -i.bak "s,cc,${TOOLSET},g" ${SRC_DIR}/project-config.jam
 
 ./b2 -q \
     variant=release \
