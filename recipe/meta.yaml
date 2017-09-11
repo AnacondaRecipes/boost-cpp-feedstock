@@ -19,27 +19,21 @@ source:
 
 build:
   number: 0
-  skip: true            # [win and py>35]
   features:
-    - vc9               # [win and py27]
-    - vc14              # [win and py35]
+    - vc{{ vc }}        # [win]
 
 requirements:
   build:
-    - toolchain
-    - python            # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - icu 58.*          # [unix]
     - bzip2 1.0.*       # [unix]
     - zlib 1.2.*
-    - vc 9              # [win and py27]
-    - vc 14             # [win and py35]
 
   run:
     - icu 58.*          # [unix]
     - bzip2 1.0.*       # [unix]
     - zlib 1.2.*
-    - vc 9              # [win and py27]
-    - vc 14             # [win and py35]
 
 test:
   commands:
@@ -54,7 +48,7 @@ test:
     - test -f $PREFIX/lib/libboost_test_exec_monitor.a           # [unix]
 
     # Verify libraries.
-    {% set win_vstr = "_".join(version.split(".")[:3]) %}
+    {% set win_vstr = "_".join(version.split(".")[:2]) %}
     {% set boost_libs = [
             "atomic",
             "chrono",
