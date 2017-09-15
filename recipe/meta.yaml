@@ -26,14 +26,9 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - icu 58.*          # [unix]
-    - bzip2 1.0.*       # [unix]
-    - zlib 1.2.*
-
-  run:
-    - icu 58.*          # [unix]
-    - bzip2 1.0.*       # [unix]
-    - zlib 1.2.*
+    - icu               # [unix]
+    - bzip2             # [unix]
+    - zlib
 
 test:
   commands:
