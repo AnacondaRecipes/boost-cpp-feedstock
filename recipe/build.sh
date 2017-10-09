@@ -13,12 +13,9 @@ set -x -e
 INCLUDE_PATH="${PREFIX}/include"
 LIBRARY_PATH="${PREFIX}/lib"
 
-# Always build PIC code for enable static linking into other shared libraries
-CXXFLAGS="${CXXFLAGS} -fPIC"
-
-if [ "$(uname)" == "Darwin" ]; then
+if [[ ${HOST} =~ .*darwin.* ]]; then
     TOOLSET=clang
-elif [ "$(uname)" == "Linux" ]; then
+elif [[ ${HOST} =~ .*linux.* ]]; then
     TOOLSET=gcc
 fi
 
@@ -41,6 +38,7 @@ LINKFLAGS="${LINKFLAGS} -L${LIBRARY_PATH}"
 sed -i.bak "s,cc,${TOOLSET},g" ${SRC_DIR}/project-config.jam
 
 ./b2 -q \
+    -d+2 \
     variant=release \
     address-model="${ARCH}" \
     architecture=x86 \
@@ -50,12 +48,7 @@ sed -i.bak "s,cc,${TOOLSET},g" ${SRC_DIR}/project-config.jam
     link=static,shared \
     toolset=${TOOLSET}-custom \
     include="${INCLUDE_PATH}" \
-    cxxflags="${CXXFLAGS}" \
+    cxxflags="${CXXFLAGS} -Wno-deprecated-declarations" \
     linkflags="${LINKFLAGS}" \
     --layout=system \
-    -j"${CPU_COUNT}" \
-    install | tee b2.log 2>&1
-
-# Remove Python headers as we don't build Boost.Python.
-rm "${PREFIX}/include/boost/python.hpp"
-rm -r "${PREFIX}/include/boost/python"
+    -j"${CPU_COUNT}" | tee b2.build.log 2>&1
