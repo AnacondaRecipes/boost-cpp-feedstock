@@ -118,16 +118,19 @@ outputs:
         - python
 
   # Metapackages to mirror conda-forge's name. It is my goal to deprecate
-  # these names and eventually stop providing these packages.
+  # these names and eventually stop providing the packages.
   # TODO :: Aim to remove these by Oct 10th 2018.
   - name: boost-cpp
     requirements:
-      - {{ pin_subpackage('libboost', exact=True) }}
+      run:
+        - {{ pin_subpackage('libboost', exact=True) }}
 
   - name: boost
     requirements:
-      - {{ pin_subpackage('libboost', exact=True) }}
-      - {{ pin_subpackage('py-boost', exact=True) }}
+      run:
+        - {{ pin_subpackage('libboost', exact=True) }}
+        - {{ pin_subpackage('py-boost', exact=True) }}
+        - python
 
 about:
   home: http://www.boost.org/
