@@ -2,7 +2,7 @@ diff --git a/boost/tools/build/src/tools/python.jam b/boost/tools/build/src/tool
 index 90377ea..123f66a 100644
 --- a/boost/tools/build/src/tools/python.jam
 +++ b/boost/tools/build/src/tools/python.jam
-@@ -493,6 +493,10 @@ local rule probe ( python-cmd )
+@@ -498,6 +498,10 @@ local rule probe ( python-cmd )
                  sys.$(s) = [ SUBST $(output) \\<$(s)=([^$(nl)]+) $1 ] ;
              }
          }
@@ -13,7 +13,7 @@ index 90377ea..123f66a 100644
          return $(output) ;
      }
  }
-@@ -502,7 +506,7 @@ local rule probe ( python-cmd )
+@@ -507,7 +511,7 @@ local rule probe ( python-cmd )
  # have a value based on the information given.
  #
  local rule compute-default-paths ( target-os : version ? : prefix ? :
@@ -22,7 +22,7 @@ index 90377ea..123f66a 100644
  {
      exec-prefix ?= $(prefix) ;
  
-@@ -539,7 +543,7 @@ local rule compute-default-paths ( target-os : version ? : prefix ? :
+@@ -544,7 +548,7 @@ local rule compute-default-paths ( target-os : version ? : prefix ? :
      }
      else
      {
@@ -31,7 +31,7 @@ index 90377ea..123f66a 100644
  
          local lib = $(exec-prefix)/lib ;
          libraries ?= $(lib)/python$(version)/config $(lib) ;
-@@ -783,7 +787,7 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
+@@ -780,7 +784,7 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
                      exec-prefix = $(sys.exec_prefix) ;
  
                      compute-default-paths $(target-os) : $(sys.version) :

@@ -13,10 +13,10 @@ source:
     - python_jam.patch
     # https://github.com/boostorg/build/issues/230
     - case-insensitive-env-vars.patch
-    # https://github.com/boostorg/build/pull/226
-    - fix-non-c90-lines.patch
     # https://github.com/boostorg/build/pull/227
-    - more-msvc-fixes.patch
+    # - more-msvc-fixes.patch
+    # https://github.com/boostorg/build/pull/{226,227} (a more complete version of both)
+    - 0001-fix-non-c90-lines.patch
 
 build:
   number: 1
@@ -34,7 +34,8 @@ requirements:
 
 outputs:
   - name: libboost
-    script: install-libboost.sh
+    script: install-libboost.sh   # [unix]
+    script: install-libboost.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -105,7 +106,8 @@ outputs:
         - conda inspect objects -p $PREFIX libboost   # [osx]
 
   - name: py-boost
-    script: install-py-boost.sh
+    script: install-py-boost.sh   # [unix]
+    script: install-py-boost.bat  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
