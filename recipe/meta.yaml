@@ -31,7 +31,6 @@ requirements:
     - icu                   # [unix]
     - bzip2                 # [unix]
     - zlib
-    - xz
 
 outputs:
   - name: libboost
@@ -44,7 +43,6 @@ outputs:
         - icu               # [unix]
         - bzip2             # [unix]
         - zlib
-        - xz
     test:
       commands:
         # Verify Python headers are removed.
@@ -129,6 +127,8 @@ outputs:
 
   - name: boost
     requirements:
+      host:
+        - python
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
         - {{ pin_subpackage('py-boost', exact=True) }}

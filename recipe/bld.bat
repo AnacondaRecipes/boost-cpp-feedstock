@@ -1,6 +1,6 @@
 :: Start with bootstrap
-call bootstrap.bat
-if errorlevel 1 exit 1
+call bootstrap.bat vc%VS_MAJOR%
+if errorlevel 1 exit /b 1
 
 :: Build step
 .\b2 install ^
@@ -13,7 +13,7 @@ if errorlevel 1 exit 1
     link=static,shared ^
     -j%CPU_COUNT% ^
     --without-python
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
 
 :: Get the major minor version info (e.g. `1_61`)
 python -c "import os; print('_'.join(os.environ['PKG_VERSION'].split('.')[:3]))" > temp.txt
@@ -21,7 +21,7 @@ set /p MAJ_MIN_VER=<temp.txt
 
 :: Install fix-up for a non version-specific boost include
 move %LIBRARY_INC%\boost-%MAJ_MIN_VER%\boost %LIBRARY_INC%
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
 
 :: Remove Python headers as we don't build Boost.Python.
 del %LIBRARY_INC%\boost\python.hpp
@@ -29,4 +29,4 @@ rmdir /s /q %LIBRARY_INC%\boost\python
 
 :: Move dll's to LIBRARY_BIN
 move %LIBRARY_LIB%\*vc%VS_MAJOR%0-mt-%MAJ_MIN_VER%.dll "%LIBRARY_BIN%"
-if errorlevel 1 exit 1
+if errorlevel 1 exit /b 1
