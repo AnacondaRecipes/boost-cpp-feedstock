@@ -1,7 +1,22 @@
 call "%PREFIX%\Scripts\activate.bat" "%PREFIX%"
 
-b2 -q ^
-     install > b2.install.log 2>&1
+set LogFile=b2.install.log
+set TempLog=b2.install.log.tmp
+set LogTee=^> %TempLog%^&^& type %TempLog%^&^&type %TempLog%^>^>%LogFile%
+
+.\b2 ^
+  -q -d+2 ^
+  --build-dir=buildboost-%VS_MAJOR% ^
+  --prefix=%LIBRARY_PREFIX% ^
+  toolset=msvc-%VS_MAJOR%.0 ^
+  address-model=%ARCH% ^
+  variant=release ^
+  threading=multi ^
+  link=static,shared ^
+  -j%CPU_COUNT% ^
+  --without-python ^
+  install ^
+  %LogTee%
 
 :: Get the major_minor_patch version info, e.g. `1_61_1`. In
 :: the past this has been just major_minor, so we do not just

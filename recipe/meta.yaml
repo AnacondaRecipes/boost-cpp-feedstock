@@ -57,7 +57,7 @@ outputs:
         - test -f $PREFIX/lib/libboost_test_exec_monitor.a                  # [unix]
 
         # Verify libraries.
-        {% set win_vstr = "_".join(version.split(".")[:2]) %}
+        {% set win_vstr = "_".join(version.split(".")) %}
         {% set boost_libs = [
                 "atomic",
                 "chrono",
