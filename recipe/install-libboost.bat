@@ -1,6 +1,6 @@
-"%PREFIX%\"Scripts\activate "%PREFIX%"
+call "%PREFIX%\Scripts\activate.bat" "%PREFIX%"
 
-./b2 -q ^
+b2 -q ^
      install > b2.install.log 2>&1
 
 :: Get the major_minor_patch version info, e.g. `1_61_1`. In

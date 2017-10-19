@@ -1,6 +1,6 @@
-"%PREFIX%"\Scripts\activate.bat "%PREFIX%"
+call "%PREFIX%\Scripts\activate.bat" "%PREFIX%"
 
-./b2 -q ^
+b2 -q ^
       python=%PY_VER% ^
       -j%CPU_COUNT% ^
       --with-python ^
