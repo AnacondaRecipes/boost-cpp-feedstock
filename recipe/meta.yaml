@@ -46,6 +46,9 @@ outputs:
         - zlib
     test:
       commands:
+        # Verify b2 and bjam executables work
+        - b2 --help
+        - bjam --help
         # Verify Python headers are removed.
         - "! test -f $PREFIX/include/boost/python.hpp"                      # [unix]
         - "! test -d $PREFIX/include/boost/python"                          # [unix]
