@@ -21,7 +21,10 @@ EOF
 rm "${PREFIX}/include/boost/python.hpp"
 rm -r "${PREFIX}/include/boost/python"
 
-cp ./b2 "%{PREFIX}/bin/b2" || exit 1
-pushd "%{PREFIX}/bin"
+cp ./b2 "${PREFIX}/bin/b2" || exit 1
+pushd "${PREFIX}/bin"
     ln -s b2 bjam || exit 1
 popd
+
+mkdir -p "${PREFIX}/share/boost-build"
+cp -rf tools/build/* "${PREFIX}/share/boost-build"

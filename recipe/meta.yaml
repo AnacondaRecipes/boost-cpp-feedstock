@@ -121,6 +121,16 @@ outputs:
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
+    test:
+      source_files: libs/python/example/tutorial/*
+      requires:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+      commands:
+        - pushd libs/python/example/tutorial
+        -   bjam
+        -   python -c 'import hello_ext; print hello_ext.greet()'
+        - popd
 
   # Metapackages to mirror conda-forge's name. It is my goal to deprecate
   # these names and eventually stop providing the packages.
