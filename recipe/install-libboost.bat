@@ -33,8 +33,8 @@ move %LIBRARY_INC%\boost-%MAJ_MIN_PAT_VER%\boost %LIBRARY_INC%
 if errorlevel 1 exit /b 1
 
 :: Remove Python headers as we don't build Boost.Python.
-del %LIBRARY_INC%\boost\python.hpp
-rmdir /s /q %LIBRARY_INC%\boost\python
+if exist %LIBRARY_INC%\boost\python.hpp del %LIBRARY_INC%\boost\python.hpp
+if exist %LIBRARY_INC%\boost\python rmdir /s /q %LIBRARY_INC%\boost\python
 
 :: Move DLLs to LIBRARY_BIN
 move %LIBRARY_LIB%\*vc%VS_MAJOR%0-mt-%MAJ_MIN_PAT_VER%.dll "%LIBRARY_BIN%"
