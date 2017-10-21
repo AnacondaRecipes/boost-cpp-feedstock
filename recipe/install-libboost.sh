@@ -20,3 +20,8 @@ EOF
 # Remove Python headers as we don't build Boost.Python.
 rm "${PREFIX}/include/boost/python.hpp"
 rm -r "${PREFIX}/include/boost/python"
+
+cp ./b2 "%{PREFIX}/bin/b2" || exit 1
+pushd "%{PREFIX}/bin"
+    ln -s b2 bjam || exit 1
+popd

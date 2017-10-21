@@ -39,3 +39,8 @@ if exist %LIBRARY_INC%\boost\python rmdir /s /q %LIBRARY_INC%\boost\python
 :: Move DLLs to LIBRARY_BIN
 move %LIBRARY_LIB%\*vc%VS_MAJOR%0-mt-%MAJ_MIN_PAT_VER%.dll "%LIBRARY_BIN%"
 if errorlevel 1 exit /b 1
+
+copy .\b2.exe %LIBRARY_BIN%\b2.exe
+if errorlevel 1 exit /b 1
+copy .\b2.exe %LIBRARY_BIN%\bjam.exe
+if errorlevel 1 exit /b 1
