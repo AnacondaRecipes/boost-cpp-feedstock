@@ -18,6 +18,7 @@ source:
     # https://github.com/boostorg/build/pull/{226,227} (a more complete version of both)
     - 0001-fix-non-c90-lines.patch
     - 0002-CONDA_BUILD-customization.patch
+    - 0003-boost.python-fix-python-lib-config-dirname.patch
 
 build:
   number: 2
@@ -119,9 +120,11 @@ outputs:
       host:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
+        - numpy
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
+        - numpy
     test:
       source_files: libs/python/example/*
       requires:
@@ -130,7 +133,7 @@ outputs:
       commands:
         - pushd libs/python/example/tutorial
         -   bjam --debug --debug-configuration
-        -   python -c 'import hello_ext; print hello_ext.greet()'
+        -   python -c 'from __future__ import print_function; import hello_ext; print(hello_ext.greet())'
         - popd
 
   # Metapackages to mirror conda-forge's name. It is my goal to deprecate

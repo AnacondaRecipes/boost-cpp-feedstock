@@ -7,7 +7,7 @@ index 90377ea..123f66a 100644
              }
          }
 +         # Try to get python abiflags
-+        full-cmd = $(python-cmd)" -c \"from sys import abiflags; print(abiflags, end='')\"" ;
++        full-cmd = $(python-cmd)" -c \"from sys import abiflags, stdout; stdout.write(abiflags)\"" ;
 +
 +        sys.abiflags = [ SHELL $(full-cmd) ] ;
          return $(output) ;

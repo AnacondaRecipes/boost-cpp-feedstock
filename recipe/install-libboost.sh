@@ -12,10 +12,13 @@ fi
 
 # http://www.boost.org/build/doc/html/bbv2/tasks/crosscompile.html
 cat <<EOF > ${SRC_DIR}/tools/build/src/site-config.jam
-using ${TOOLSET} : custom : ${CXX} ;
+import os ;
+local CXXFLAGS = [ os.environ CXXFLAGS ] ;
+local LDFLAGS = [ os.environ LDFLAGS ] ;
+using ${TOOLSET} : custom : ${CXX} : <compileflags>-Wno-deprecated-declarations -I${PREFIX}/include \$(CXXFLAGS) <linkflags>-L${PREFIX}/lib \$(LDFLAGS) ;
 EOF
 
-./b2 -q \
+./b2 -q -d+2 \
      install | tee b2.install.log 2>&1
 
 # Remove Python headers as we don't build Boost.Python.

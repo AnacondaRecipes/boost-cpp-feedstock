@@ -37,18 +37,17 @@ LINKFLAGS="${LINKFLAGS} -L${LIBRARY_PATH}"
 # https://stackoverflow.com/a/5244844/1005215
 sed -i.bak "s,cc,${TOOLSET},g" ${SRC_DIR}/project-config.jam
 
-./b2 -q \
-    -d+2 \
-    variant=release \
-    address-model="${ARCH}" \
-    architecture=x86 \
-    debug-symbols=off \
-    threading=multi \
-    runtime-link=shared \
-    link=static,shared \
-    toolset=${TOOLSET}-custom \
-    include="${INCLUDE_PATH}" \
-    cxxflags="${CXXFLAGS} -Wno-deprecated-declarations" \
-    linkflags="${LINKFLAGS}" \
-    --layout=system \
-    -j"${CPU_COUNT}" | tee b2.build.log 2>&1
+./b2 -q -d+2 \
+     variant=release \
+     address-model="${ARCH}" \
+     architecture=x86 \
+     debug-symbols=off \
+     threading=multi \
+     runtime-link=shared \
+     link=static,shared \
+     toolset=${TOOLSET}-custom \
+     include="${INCLUDE_PATH}" \
+     cxxflags="${CXXFLAGS} -Wno-deprecated-declarations" \
+     linkflags="${LINKFLAGS}" \
+     --layout=system \
+     -j"${CPU_COUNT}" | tee b2.build.log 2>&1
