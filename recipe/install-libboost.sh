@@ -15,7 +15,7 @@ cat <<EOF > ${SRC_DIR}/tools/build/src/site-config.jam
 import os ;
 local CXXFLAGS = [ os.environ CXXFLAGS ] ;
 local LDFLAGS = [ os.environ LDFLAGS ] ;
-using ${TOOLSET} : custom : ${CXX} : <compileflags>-Wno-deprecated-declarations -I${PREFIX}/include \$(CXXFLAGS) <linkflags>-L${PREFIX}/lib \$(LDFLAGS) ;
+using ${TOOLSET} : custom : ${CXX} : <compileflags>-I${PREFIX}/include \$(CXXFLAGS) -Wno-deprecated-declarations <linkflags>-L${PREFIX}/lib \$(LDFLAGS) ;
 EOF
 
 ./b2 -q -d+2 \
