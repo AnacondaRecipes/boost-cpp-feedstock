@@ -17,6 +17,7 @@ source:
     # - more-msvc-fixes.patch
     # https://github.com/boostorg/build/pull/{226,227} (a more complete version of both)
     - 0001-fix-non-c90-lines.patch
+    - 0002-CONDA_BUILD-customization.patch
 
 build:
   number: 2
@@ -122,13 +123,13 @@ outputs:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
     test:
-      source_files: libs/python/example/tutorial/*
+      source_files: libs/python/example/*
       requires:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       commands:
         - pushd libs/python/example/tutorial
-        -   bjam
+        -   bjam --debug --debug-configuration
         -   python -c 'import hello_ext; print hello_ext.greet()'
         - popd
 

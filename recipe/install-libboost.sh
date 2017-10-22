@@ -10,6 +10,7 @@ elif [[ ${HOST} =~ .*linux.* ]]; then
     TOOLSET=gcc
 fi
 
+# http://www.boost.org/build/doc/html/bbv2/tasks/crosscompile.html
 cat <<EOF > ${SRC_DIR}/tools/build/src/site-config.jam
 using ${TOOLSET} : custom : ${CXX} ;
 EOF
@@ -28,3 +29,8 @@ popd
 
 mkdir -p "${PREFIX}/share/boost-build"
 cp -rf tools/build/* "${PREFIX}/share/boost-build"
+
+# We have patched build-system.jam to use this file when
+# the CONDA_BUILD environment variable is set.
+mkdir -p "${PREFIX}/etc"
+cp ${SRC_DIR}/tools/build/src/site-config.jam "${PREFIX}/etc"
