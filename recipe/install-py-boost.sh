@@ -16,5 +16,5 @@ set -x -e
 # any passed --python-buildid; ping @stefanseefeld
 pushd "${PREFIX}/lib"
   ln -s libboost_python${PY_VER%.*}.so libboost_python.so
-  ln -s libboost_numpy${PY_VER%.}.so libboost_numpy.so
+  ln -s libboost_numpy${PY_VER%.*}.so libboost_numpy.so
 popd
