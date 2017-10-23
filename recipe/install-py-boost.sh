@@ -16,7 +16,12 @@ set -x -e
 # --python-buildid; ping @stefanseefeld
 if [[ ${PY_VER%.*} == 3 ]]; then
   pushd "${PREFIX}/lib"
-    ln -s libboost_python${PY_VER%.*}.so libboost_python.so
-    ln -s libboost_numpy${PY_VER%.*}.so libboost_numpy.so
+    if [[ ${HOST} =~ .*darwin.* ]]; then
+      ln -s libboost_python${PY_VER%.*}.dylib libboost_python.dylib
+      ln -s libboost_numpy${PY_VER%.*}.dylib libboost_numpy.dylib
+    else
+      ln -s libboost_python${PY_VER%.*}.so libboost_python.so
+      ln -s libboost_numpy${PY_VER%.*}.so libboost_numpy.so
+    fi
   popd
 fi
