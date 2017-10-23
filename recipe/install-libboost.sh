@@ -30,11 +30,13 @@ pushd "${PREFIX}/bin"
     ln -s b2 bjam || exit 1
 popd
 
-pushd tools/build
-  for _dir in kernel options tools types util; do
+pushd tools/build/src
+  for _dir in build kernel options tools util; do
     mkdir -p "${PREFIX}/share/boost-build/src/${_dir}"
     cp -rf ${_dir}/* "${PREFIX}/share/boost-build/src/${_dir}/"
   done
+popd
+pushd tools/build
   cp -f *.jam "${PREFIX}/share/boost-build"
 popd
 

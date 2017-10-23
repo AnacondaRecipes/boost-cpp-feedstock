@@ -49,14 +49,12 @@ mkdir "%LIBRARY_PREFIX%\share\boost-build\src\build"
 mkdir "%LIBRARY_PREFIX%\share\boost-build\src\kernel"
 mkdir "%LIBRARY_PREFIX%\share\boost-build\src\options"
 mkdir "%LIBRARY_PREFIX%\share\boost-build\src\tools"
-mkdir "%LIBRARY_PREFIX%\share\boost-build\src\types"
 mkdir "%LIBRARY_PREFIX%\share\boost-build\src\util"
 pushd tools\build\src
   robocopy /E build   "%LIBRARY_PREFIX%\share\boost-build\src\build"
   robocopy /E kernel  "%LIBRARY_PREFIX%\share\boost-build\src\kernel"
   robocopy /E options "%LIBRARY_PREFIX%\share\boost-build\src\options"
   robocopy /E tools   "%LIBRARY_PREFIX%\share\boost-build\src\tools"
-  robocopy /E types   "%LIBRARY_PREFIX%\share\boost-build\src\types"
   robocopy /E util    "%LIBRARY_PREFIX%\share\boost-build\src\util"
 popd
 pushd tools\build
