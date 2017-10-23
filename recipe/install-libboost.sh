@@ -30,8 +30,13 @@ pushd "${PREFIX}/bin"
     ln -s b2 bjam || exit 1
 popd
 
-mkdir -p "${PREFIX}/share/boost-build"
-cp -rf tools/build/* "${PREFIX}/share/boost-build"
+pushd tools/build
+  for _dir in kernel options tools types util; do
+    mkdir -p "${PREFIX}/share/boost-build/src/${_dir}"
+    cp -rf ${_dir}/* "${PREFIX}/share/boost-build/src/${_dir}/"
+  done
+  cp -f *.jam "${PREFIX}/share/boost-build"
+popd
 
 # We have patched build-system.jam to use this file when
 # the CONDA_BUILD environment variable is set.
