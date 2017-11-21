@@ -21,9 +21,7 @@ source:
     - 0003-boost.python-fix-python-lib-config-dirname.patch
 
 build:
-  number: 3
-  features:
-    - vc{{ vc }}            # [win]
+  number: 4
 
 requirements:
   build:
