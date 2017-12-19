@@ -2,10 +2,11 @@
 
 set -x -e
 
+# activate the build environment
 . activate "${BUILD_PREFIX}"
 
-echo "PPPP"
-python -V
+# remove any old builds of the python target
+./b2 -q -d+2 --with-python --clean
 
 ./b2 -q -d+2 \
      python=${PY_VER} \
@@ -29,6 +30,9 @@ if [[ ${PY_VER%.*} == 3 ]]; then
   popd
 fi
 
+# debugging
 echo "QQQQ"
+echo "Python 2.7 should include: PyUnicodeUCS4_AsWideChar"
+echo "Python 3.x should include: PyUnicode_AsUTF8"
 python -V
 nm $PREFIX/lib/libboost_python.so | grep Unicode
