@@ -2,7 +2,7 @@
 
 set -x -e
 
-. activate "${PREFIX}"
+. activate "${BUILD_PREFIX}"
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
     TOOLSET=clang
@@ -25,6 +25,7 @@ EOF
 rm "${PREFIX}/include/boost/python.hpp"
 rm -r "${PREFIX}/include/boost/python"
 
+mkdir -p ${PREFIX}/bin
 cp ./b2 "${PREFIX}/bin/b2" || exit 1
 pushd "${PREFIX}/bin"
     ln -s b2 bjam || exit 1

@@ -2,7 +2,10 @@
 
 set -x -e
 
-. activate "${PREFIX}"
+. activate "${BUILD_PREFIX}"
+
+echo "PPPP"
+python -V
 
 ./b2 -q -d+2 \
      python=${PY_VER} \
@@ -25,3 +28,7 @@ if [[ ${PY_VER%.*} == 3 ]]; then
     fi
   popd
 fi
+
+echo "QQQQ"
+python -V
+nm $PREFIX/lib/libboost_python.so | grep Unicode

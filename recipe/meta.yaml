@@ -1,8 +1,9 @@
 {% set version = "1.65.1" %}
+{% set win_vstr = "1_65_1" %}
 {% set filename = "boost_%s.tar.bz2" % version.replace(".", "_") %}
 
 package:
-  name: libboost
+  name: libboost_multi
   version: {{ version }}
 
 source:
@@ -44,69 +45,68 @@ outputs:
         - icu               # [unix]
         - bzip2             # [unix]
         - zlib
-    test:
-      commands:
-        # Verify b2 and bjam executables work
-        - b2 --help
-        - bjam --help
-        # Verify Python headers are removed.
-        - "! test -f $PREFIX/include/boost/python.hpp"                      # [unix]
-        - "! test -d $PREFIX/include/boost/python"                          # [unix]
-        - if exist %PREFIX%\\Library\\include\\boost\\python.hpp exit 1     # [win]
-        - if exist %PREFIX%\\Library\\include\\boost\\python exit 1         # [win]
-
-        # Verify static-only libraries.
-        - test -f $PREFIX/lib/libboost_exception.a                          # [unix]
-        - test -f $PREFIX/lib/libboost_test_exec_monitor.a                  # [unix]
-
-        # Verify libraries.
-        {% set win_vstr = "_".join(version.split(".")) %}
-        {% set boost_libs = [
-                "atomic",
-                "chrono",
-                "container",
-                "context",
-                "coroutine",
-                "date_time",
-                "filesystem",
-                "graph",
-                "iostreams",
-                "locale",
-                "log",
-                "log_setup",
-                "math_c99",
-                "math_c99f",
-                "math_c99l",
-                "math_tr1",
-                "math_tr1f",
-                "math_tr1l",
-                "prg_exec_monitor",
-                "program_options",
-                "random",
-                "regex",
-                "serialization",
-                "signals",
-                "system",
-                "thread",
-                "timer",
-                "type_erasure",
-                "unit_test_framework",
-                "wave",
-                "wserialization"
-        ] %}
-        {% for each_boost_lib in boost_libs %}
-        - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.a                                                 # [unix]
-        - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.dylib                                             # [osx]
-        - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.so                                                # [linux]
-        - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc90-mt-{{ win_vstr }}.dll exit 1   # [win and py27]
-        - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc100-mt-{{ win_vstr }}.dll exit 1  # [win and py34]
-        - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc140-mt-{{ win_vstr }}.dll exit 1  # [win and py35]
-        - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc90-mt-{{ win_vstr }}.lib exit 1   # [win and py27]
-        - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc100-mt-{{ win_vstr }}.lib exit 1  # [win and py34]
-        - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc140-mt-{{ win_vstr }}.lib exit 1  # [win and py35]
-        {% endfor %}
-        - conda inspect linkages -p $PREFIX libboost  # [not win]
-        - conda inspect objects -p $PREFIX libboost   # [osx]
+    #test:
+    #  commands:
+    #    # Verify b2 and bjam executables work
+    #    - b2 --help
+    #    - bjam --help
+    #    # Verify Python headers are removed.
+    #    - "! test -f $PREFIX/include/boost/python.hpp"                      # [unix]
+    #    - "! test -d $PREFIX/include/boost/python"                          # [unix]
+    #    - if exist %PREFIX%\\Library\\include\\boost\\python.hpp exit 1     # [win]
+    #    - if exist %PREFIX%\\Library\\include\\boost\\python exit 1         # [win]
+    #
+    #    # Verify static-only libraries.
+    #    - test -f $PREFIX/lib/libboost_exception.a                          # [unix]
+    #    - test -f $PREFIX/lib/libboost_test_exec_monitor.a                  # [unix]
+    #
+    #    # Verify libraries.
+    #    {% set boost_libs = [
+    #            "atomic",
+    #            "chrono",
+    #            "container",
+    #            "context",
+    #            "coroutine",
+    #            "date_time",
+    #            "filesystem",
+    #            "graph",
+    #            "iostreams",
+    #            "locale",
+    #            "log",
+    #            "log_setup",
+    #            "math_c99",
+    #            "math_c99f",
+    #            "math_c99l",
+    #            "math_tr1",
+    #            "math_tr1f",
+    #            "math_tr1l",
+    #            "prg_exec_monitor",
+    #            "program_options",
+    #            "random",
+    #            "regex",
+    #            "serialization",
+    #            "signals",
+    #            "system",
+    #            "thread",
+    #            "timer",
+    #            "type_erasure",
+    #            "unit_test_framework",
+    #            "wave",
+    #            "wserialization"
+    #    ] %}
+    #    {% for each_boost_lib in boost_libs %}
+    #    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.a                                                 # [unix]
+    #    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.dylib                                             # [osx]
+    #    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.so                                                # [linux]
+    #    - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc90-mt-{{ win_vstr }}.dll exit 1   # [win and py27]
+    #    - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc100-mt-{{ win_vstr }}.dll exit 1  # [win and py34]
+    #    - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_boost_lib }}-vc140-mt-{{ win_vstr }}.dll exit 1  # [win and py35]
+    #    - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc90-mt-{{ win_vstr }}.lib exit 1   # [win and py27]
+    #    - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc100-mt-{{ win_vstr }}.lib exit 1  # [win and py34]
+    #    - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_boost_lib }}-vc140-mt-{{ win_vstr }}.lib exit 1  # [win and py35]
+    #    {% endfor %}
+    #    - conda inspect linkages -p $PREFIX libboost  # [not win]
+    #    - conda inspect objects -p $PREFIX libboost   # [osx]
 
   - name: py-boost
     script: install-py-boost.sh   # [unix]
@@ -123,16 +123,16 @@ outputs:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
         - numpy
-    test:
-      source_files: libs/python/example/*
-      requires:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-      commands:
-        - pushd libs/python/example/tutorial
-        -   bjam --debug --debug-configuration
-        -   python -c 'from __future__ import print_function; import hello_ext; print(hello_ext.greet())'
-        - popd
+    #test:
+    #  source_files: libs/python/example/*
+    #  requires:
+    #    - {{ compiler('c') }}
+    #    - {{ compiler('cxx') }}
+    #  commands:
+    #    - pushd libs/python/example/tutorial
+    #    -   bjam --debug --debug-configuration
+    #    -   python -c 'from __future__ import print_function; import hello_ext; print(hello_ext.greet())'
+    #    - popd
 
   # Metapackages to mirror conda-forge's name. It is my goal to deprecate
   # these names and eventually stop providing the packages.
