@@ -3,7 +3,7 @@
 {% set filename = "boost_%s.tar.bz2" % version.replace(".", "_") %}
 
 package:
-  name: libboost
+  name: libboost_multiple_outputs
   version: {{ version }}
 
 source:
