@@ -5,6 +5,9 @@ set -x -e
 # activate the build environment
 . activate "${BUILD_PREFIX}"
 
+# remove any old builds of the python target
+./b2 -q -d+2 --with-python --clean
+
 ./b2 -q -d+2 \
      python=${PY_VER} \
      -j${CPU_COUNT} \
