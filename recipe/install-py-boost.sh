@@ -2,7 +2,8 @@
 
 set -x -e
 
-. activate "${PREFIX}"
+# activate the build environment
+. activate "${BUILD_PREFIX}"
 
 ./b2 -q -d+2 \
      python=${PY_VER} \
