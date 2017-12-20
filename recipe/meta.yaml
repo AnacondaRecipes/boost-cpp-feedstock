@@ -1,4 +1,5 @@
 {% set version = "1.65.1" %}
+{% set win_vstr = "1_65_1" %}
 {% set filename = "boost_%s.tar.bz2" % version.replace(".", "_") %}
 
 package:
@@ -60,7 +61,6 @@ outputs:
         - test -f $PREFIX/lib/libboost_test_exec_monitor.a                  # [unix]
 
         # Verify libraries.
-        {% set win_vstr = "_".join(version.split(".")) %}
         {% set boost_libs = [
                 "atomic",
                 "chrono",
