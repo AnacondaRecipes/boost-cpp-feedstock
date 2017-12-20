@@ -11,6 +11,7 @@ elif [[ ${HOST} =~ .*linux.* ]]; then
     TOOLSET=gcc
 fi
 
+export CXX=$(basename ${CXX})
 # http://www.boost.org/build/doc/html/bbv2/tasks/crosscompile.html
 cat <<EOF > ${SRC_DIR}/tools/build/src/site-config.jam
 import os ;
@@ -37,6 +38,7 @@ pushd tools/build/src
     mkdir -p "${PREFIX}/share/boost-build/src/${_dir}"
     cp -rf ${_dir}/* "${PREFIX}/share/boost-build/src/${_dir}/"
   done
+  cp -f build-system.jam "${PREFIX}/share/boost-build/src/"
 popd
 pushd tools/build
   cp -f *.jam "${PREFIX}/share/boost-build"
