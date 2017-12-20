@@ -168,6 +168,10 @@ outputs:
     requirements:
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
+    # minimal test section to keep conda-build happy
+    test:
+      commands:
+        - echo "pass"
 
   - name: boost
     requirements:
@@ -177,6 +181,10 @@ outputs:
         - {{ pin_subpackage('libboost', exact=True) }}
         - {{ pin_subpackage('py-boost', exact=True) }}
         - python
+    # minimal test section to keep conda-build happy
+    test:
+      commands:
+        - echo "pass"
 
 about:
   home: http://www.boost.org/
