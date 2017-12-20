@@ -35,4 +35,8 @@ echo "QQQQ"
 echo "Python 2.7 should include: PyUnicodeUCS4_AsWideChar"
 echo "Python 3.x should include: PyUnicode_AsUTF8"
 python -V
-nm $PREFIX/lib/libboost_python.so | grep Unicode
+if [[ ${HOST} =~ .*darwin.* ]]; then
+    nm $PREFIX/lib/libboost_python.dylib | grep Unicode
+else
+    nm $PREFIX/lib/libboost_python.so | grep Unicode
+fi
