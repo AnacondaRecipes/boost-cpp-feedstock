@@ -1,8 +1,17 @@
-call "%PREFIX%\Scripts\activate.bat" "%PREFIX%"
+:: activate the build environment
+call "%BUILD_PREFIX%\Scripts\activate.bat" "%BUILD_PREFIX%"
+
+:: "stack" the host environment on top of the build env
+set "CONDA_PATH_BACKUP="
+set CONDA_MAX_SHLVL=2
+call "%BUILD_PREFIX%\Scripts\activate.bat" "%PREFIX%"
 
 set LogFile=b2.install-py-%PY_VER%.log
 set TempLog=b2.install-py-%PY_VER%.log.tmp
 set LogTee=^> %TempLog%^&^& type %TempLog%^&^&type %TempLog%^>^>%LogFile%
+
+:: remove any old builds of the python target
+.\b2 -q -d+2 --with-python --clean
 
 .\b2 ^
   -q -d+2 ^

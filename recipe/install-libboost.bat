@@ -1,4 +1,5 @@
-call "%PREFIX%\Scripts\activate.bat" "%PREFIX%"
+:: activate the build environment
+call "%BUILD_PREFIX%\Scripts\activate.bat" "%BUILD_PREFIX%"
 
 set LogFile=b2.install.log
 set TempLog=b2.install.log.tmp
