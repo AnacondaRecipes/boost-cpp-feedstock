@@ -126,13 +126,13 @@ outputs:
     test:
       source_files: libs/python/example/*
       requires:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}    # [not win]
+        - {{ compiler('cxx') }}  # [not win]
       commands:
-        - pushd libs/python/example/tutorial
-        -   bjam --debug --debug-configuration
-        -   python -c 'from __future__ import print_function; import hello_ext; print(hello_ext.greet())'
-        - popd
+        - pushd libs/python/example/tutorial                                                                # [not win]
+        -   bjam --debug --debug-configuration                                                              # [not win]
+        -   python -c 'from __future__ import print_function; import hello_ext; print(hello_ext.greet())'   # [not win]
+        - popd                                                                                              # [not win]
 
         # verify Python headers
         - test -f $PREFIX/include/boost/python.hpp                # [unix]
@@ -153,9 +153,9 @@ outputs:
         - test -f $PREFIX/lib/libboost_{{ each_py_boost_lib }}.so                                                 # [linux]
         - test -f $PREFIX/lib/libboost_{{ each_py_boost_lib }}3.so                                                # [linux and py >= 35]
         - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_py_boost_lib }}-vc90-mt-{{ win_vstr }}.dll exit 1    # [win and py27]
-        - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_py_boost_lib }}-vc140-mt-{{ win_vstr }}.dll exit 1   # [win and py >= 35]
+        - if not exist %PREFIX%\\Library\\bin\\boost_{{ each_py_boost_lib }}3-vc140-mt-{{ win_vstr }}.dll exit 1  # [win and py >= 35]
         - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_py_boost_lib }}-vc90-mt-{{ win_vstr }}.lib exit 1    # [win and py27]
-        - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_py_boost_lib }}-vc140-mt-{{ win_vstr }}.lib exit 1   # [win and py >= 35]
+        - if not exist %PREFIX%\\Library\\lib\\boost_{{ each_py_boost_lib }}3-vc140-mt-{{ win_vstr }}.lib exit 1  # [win and py >= 35]
         {% endfor %}
         - conda inspect linkages -p $PREFIX py-boost  # [not win]
         - conda inspect objects -p $PREFIX py-boost   # [osx]
