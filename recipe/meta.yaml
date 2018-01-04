@@ -122,7 +122,7 @@ outputs:
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
         - python
-        - numpy
+        - {{ pin_compatible('numpy') }}
     test:
       source_files: libs/python/example/*
       requires:
