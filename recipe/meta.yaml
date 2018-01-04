@@ -166,6 +166,8 @@ outputs:
   # TODO :: Aim to remove these by Oct 10th 2018.
   - name: boost-cpp
     requirements:
+      build:
+        - {{ compiler('c') }}
       run:
         - {{ pin_subpackage('libboost', exact=True) }}
 
